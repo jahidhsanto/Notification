@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     // 2. Notification Builder
     // 3. Notification Manager
 
-    private static final String CHANNEL_ID = "simplified_coding";
+    public static final String CHANNEL_ID = "simplified_coding";
     private static final String CHANNEL_NAME = "simplified Coding";
     private static final String CHANNEL_DESC = "simplified Coding Notifications";
 
@@ -126,27 +126,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    private void displayNotification() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.baseline_notifications_active_24)
-                .setContentTitle("Hurray! It is working...")
-                .setContentText("Your first notification")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mNotificationMgr.notify(1, mBuilder.build());
-
     }
 }
