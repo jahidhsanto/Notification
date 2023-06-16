@@ -62,19 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 createUser();
             }
         });
-
-        // Get the FCM token
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        // Handle the error in token retrieval
-                        return;
-                    }
-
-                    String token = task.getResult();
-
-                });
-
     }
 
     private void createUser() {
@@ -124,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() != null) {
+            startProfileActivity();
+        }
     }
 
     private void startProfileActivity() {
