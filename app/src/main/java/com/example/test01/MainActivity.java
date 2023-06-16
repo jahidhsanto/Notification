@@ -12,6 +12,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     // 1. Notification Channel
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String CHANNEL_NAME = "simplified Coding";
     private static final String CHANNEL_DESC = "simplified Coding Notifications";
 
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +39,21 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
         }
 
+        textView = findViewById(R.id.textViewToken);
 
-        findViewById(R.id.buttonNotify).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                displayNotification();
-            }
-        });
+        // Get the FCM token
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        // Handle the error in token retrieval
+                        textView.setText(task.getException().getMessage());
+                        return;
+                    }
+
+                    String token = task.getResult();
+                    textView.setText("Token: " + token);
+
+                });
 
     }
 
